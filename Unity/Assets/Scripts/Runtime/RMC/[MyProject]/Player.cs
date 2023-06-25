@@ -64,6 +64,11 @@ namespace RMC.MyProject.Scenes
         {
             Vector2 inputMoveVector2 = _inputActions.ActionMap.Move.ReadValue<Vector2>();
             _lastMoveVector3 = new Vector3(inputMoveVector2.x, 0, inputMoveVector2.y);
+
+            if (_inputActions.ActionMap.Attack.WasPressedThisFrame())
+            {
+                _animator.SetTrigger("AttackTrigger");
+            }
         }
         
         protected void FixedUpdate ()
