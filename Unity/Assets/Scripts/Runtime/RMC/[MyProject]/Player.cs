@@ -22,6 +22,9 @@ namespace RMC.MyProject.Scenes
 
 
         //  Fields ----------------------------------------
+        [SerializeField] 
+        private float _speed = 1;
+        
         private InputActions _inputActions;
 
 
@@ -54,7 +57,8 @@ namespace RMC.MyProject.Scenes
         protected void Update()
         {
             Vector2 move = _inputActions.ActionMap.Move.ReadValue<Vector2>();
-            Debug.Log("move: " + move);
+            Vector3 move3 = new Vector3(move.x, 0, move.y);
+            transform.Translate(move3 * Time.deltaTime * _speed);
         }
 
 
