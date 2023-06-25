@@ -1,6 +1,4 @@
-using System;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace RMC.MyProject.Scenes
 {
@@ -22,6 +20,9 @@ namespace RMC.MyProject.Scenes
 
 
         //  Fields ----------------------------------------
+        [SerializeField] 
+        private Animator _animator;
+        
         [SerializeField] 
         private float _speed = 1;
         
@@ -58,7 +59,22 @@ namespace RMC.MyProject.Scenes
         {
             Vector2 move = _inputActions.ActionMap.Move.ReadValue<Vector2>();
             Vector3 move3 = new Vector3(move.x, 0, move.y);
-            transform.Translate(move3 * Time.deltaTime * _speed);
+            
+            if (move3.magnitude > 0)
+            {
+                _animator.SetBool("IsRun", true);
+                
+                transform.Translate(move3 * Time.deltaTime * _speed, 
+                    Space.World);
+                
+                transform.rotation = Quaternion.LookRotation(-move3);
+            }
+            else
+            {
+                _animator.SetBool("IsRun", false);
+            }
+           
+           
         }
 
 
