@@ -1,5 +1,6 @@
 using RMC.Core.Audio;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace RMC.MyProject.Scenes
 {
@@ -7,7 +8,7 @@ namespace RMC.MyProject.Scenes
 
 
     //  Class Attributes ----------------------------------
-
+    public class PlayerUnityEvent : UnityEvent<Player>{}
 
     /// <summary>
     /// Replace with comments...
@@ -15,7 +16,8 @@ namespace RMC.MyProject.Scenes
     public class Player : MonoBehaviour
     {
         //  Events ----------------------------------------
-
+        [HideInInspector]
+        public PlayerUnityEvent OnAttackCompleted = new PlayerUnityEvent();
 
         //  Properties ------------------------------------
 
@@ -69,9 +71,7 @@ namespace RMC.MyProject.Scenes
             if (_inputActions.ActionMap.Attack.WasPressedThisFrame())
             {
                 _animator.SetTrigger("AttackTrigger");
-
-                AudioManager.Instance.PlayAudioClip("SwordMiss01");
-
+                OnAttackCompleted.Invoke(this);
             }
         }
         
