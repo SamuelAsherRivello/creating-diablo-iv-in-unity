@@ -11,7 +11,7 @@ namespace RMC.MyProject.Scenes
     /// <summary>
     /// Replace with comments...
     /// </summary>
-    public class Scene01_Intro : MonoBehaviour
+    public class GameManager : MonoBehaviour
     {
         //  Events ----------------------------------------
 
@@ -30,7 +30,6 @@ namespace RMC.MyProject.Scenes
         {
             Debug.Log($"{GetType().Name}.Start()");
         }
-
 
         protected void Update()
         {
