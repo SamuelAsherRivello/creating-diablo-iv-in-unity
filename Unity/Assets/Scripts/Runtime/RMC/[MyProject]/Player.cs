@@ -1,3 +1,4 @@
+using RMC.Core.Audio;
 using UnityEngine;
 
 namespace RMC.MyProject.Scenes
@@ -68,6 +69,9 @@ namespace RMC.MyProject.Scenes
             if (_inputActions.ActionMap.Attack.WasPressedThisFrame())
             {
                 _animator.SetTrigger("AttackTrigger");
+
+                AudioManager.Instance.PlayAudioClip("SwordMiss01");
+
             }
         }
         
