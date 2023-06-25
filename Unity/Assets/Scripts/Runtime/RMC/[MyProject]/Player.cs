@@ -24,8 +24,13 @@ namespace RMC.MyProject.Scenes
         private Animator _animator;
         
         [SerializeField] 
+        private Rigidbody _rigidbody;
+
+        
+        [SerializeField] 
         private float _speed = 1;
         
+        private Vector3 _lastMoveVector3 = Vector3.zero;
         private InputActions _inputActions;
 
 
@@ -57,17 +62,22 @@ namespace RMC.MyProject.Scenes
 
         protected void Update()
         {
-            Vector2 move = _inputActions.ActionMap.Move.ReadValue<Vector2>();
-            Vector3 move3 = new Vector3(move.x, 0, move.y);
-            
-            if (move3.magnitude > 0)
+            Vector2 inputMoveVector2 = _inputActions.ActionMap.Move.ReadValue<Vector2>();
+            _lastMoveVector3 = new Vector3(inputMoveVector2.x, 0, inputMoveVector2.y);
+        }
+        
+        protected void FixedUpdate ()
+        {
+            if (_lastMoveVector3.magnitude > 0)
             {
                 _animator.SetBool("IsRun", true);
                 
-                transform.Translate(move3 * Time.deltaTime * _speed, 
-                    Space.World);
+                Quaternion nextRotation = Quaternion.LookRotation(-_lastMoveVector3);
+                Vector3 nextPosition = _rigidbody.transform.position +
+                                       (_lastMoveVector3 * _speed);
                 
-                transform.rotation = Quaternion.LookRotation(-move3);
+                _rigidbody.Move(nextPosition, nextRotation);
+                
             }
             else
             {
